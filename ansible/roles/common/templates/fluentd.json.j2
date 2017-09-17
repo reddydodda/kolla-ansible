@@ -18,6 +18,12 @@
             "perm": "0600"
         },
         {
+            "source": "{{ container_config_directory }}/input/01-syslog.conf",
+            "dest": "{{ fluentd_dir }}/input/01-syslog.conf",
+            "owner": "{{ fluentd_user }}",
+            "perm": "0600"
+        },
+        {
             "source": "{{ container_config_directory }}/input/02-mariadb.conf",
             "dest": "{{ fluentd_dir }}/input/02-mariadb.conf",
             "owner": "{{ fluentd_user }}",
@@ -30,8 +36,14 @@
             "perm": "0600"
         },
         {
-            "source": "{{ container_config_directory }}/input/01-syslog.conf",
-            "dest": "{{ fluentd_dir }}/input/01-syslog.conf",
+            "source": "{{ container_config_directory }}/input/04-openstack-wsgi.conf",
+            "dest": "{{ fluentd_dir }}/input/04-openstack-wsgi.conf",
+            "owner": "{{ fluentd_user }}",
+            "perm": "0600"
+        },
+        {
+            "source": "{{ container_config_directory }}/input/05-libvirt.conf",
+            "dest": "{{ fluentd_dir }}/input/05-libvirt.conf",
             "owner": "{{ fluentd_user }}",
             "perm": "0600"
         },
@@ -56,12 +68,6 @@
         {
             "source": "{{ container_config_directory }}/format/wsgi_access.conf",
             "dest": "{{ fluentd_dir }}/format/wsgi_access.conf",
-            "owner": "{{ fluentd_user }}",
-            "perm": "0600"
-        },
-        {
-            "source": "{{ container_config_directory }}/format/wsgi_python.conf",
-            "dest": "{{ fluentd_dir }}/format/wsgi_python.conf",
             "owner": "{{ fluentd_user }}",
             "perm": "0600"
         },{% if enable_elasticsearch | bool or

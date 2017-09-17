@@ -6,7 +6,7 @@ set -o errexit
 # Enable unbuffered output for Ansible in Jenkins.
 export PYTHONUNBUFFERED=1
 
-source /etc/nodepool/provider
+. /etc/nodepool/provider
 
 NODEPOOL_MIRROR_HOST=${NODEPOOL_MIRROR_HOST:-mirror.$NODEPOOL_REGION.$NODEPOOL_CLOUD.openstack.org}
 NODEPOOL_MIRROR_HOST=$(echo $NODEPOOL_MIRROR_HOST|tr '[:upper:]' '[:lower:]')
@@ -158,7 +158,7 @@ function setup_logging {
 }
 
 function prepare_images {
-    sudo docker run -d -p 4000:5000 --restart=always -v /tmp/kolla_registry/:/var/lib/registry --name registry registry:2
+    sudo docker run -d -p 4000:5000 --restart=always -v /opt/kolla_registry/:/var/lib/registry --name registry registry:2
 
     # NOTE(Jeffrey4l): Zuul adds all changes depend on to ZUUL_CHANGES
     # variable. if find "openstack/kolla:" string, it means this patch depends
@@ -175,7 +175,7 @@ function prepare_images {
         filename=${BASE_DISTRO}-${INSTALL_TYPE}-registry-${BRANCH}.tar.gz
         wget -q -c -O "/tmp/$filename" \
             "${NODEPOOL_TARBALLS_MIRROR}/kolla/images/${TMP_REGISTRY}${filename}"
-        sudo tar xzf "/tmp/$filename" -C /tmp/kolla_registry
+        sudo tar xzf "/tmp/$filename" -C /opt/kolla_registry
     fi
 }
 

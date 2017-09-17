@@ -34,6 +34,25 @@ function setup_disk {
         DEV=$(losetup -a | awk -F: '/\/docker/ {print $1}')
     fi
 
+# Excerpts from https://github.com/openstack-infra/devstack-gate/blob/dc49f9e6eb18e42c6b175e4e146fa8f3b7633279/functions.sh#L306
+    if [ -b /dev/xvde ]; then
+        DEV2='/dev/xvde'
+        if mount | grep ${DEV2} > /dev/null; then
+            echo "*** ${DEV2} appears to already be mounted"
+            echo "*** ${DEV2} unmounting and reformating"
+            sudo umount ${DEV2}
+        fi
+        sudo parted ${DEV2} --script -- mklabel msdos
+        sync
+        sudo partprobe
+        sudo mkfs.ext4 ${DEV2}
+        sudo mount ${DEV2} /mnt
+        sudo find /opt/ -mindepth 1 -maxdepth 1 -exec mv {} /mnt/ \;
+        sudo umount /mnt
+        sudo mount ${DEV2} /opt
+        grep -q ${DEV2} /proc/mounts || exit 1
+    fi
+
     # Format Disks and setup Docker to use BTRFS
     sudo parted ${DEV} -s -- mklabel msdos
     sudo rm -rf /var/lib/docker
@@ -51,7 +70,7 @@ function setup_disk {
 # (SamYaple)TODO: Remove the path overriding
 export PATH="/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin"
 
-source /etc/lsb-release
+. /etc/lsb-release
 
 # Setup Docker repo and add signing key
 echo "deb http://apt.dockerproject.org/repo ubuntu-${DISTRIB_CODENAME} main" | sudo tee /etc/apt/sources.list.d/docker.list

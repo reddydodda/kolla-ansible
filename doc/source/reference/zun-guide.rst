@@ -9,7 +9,7 @@ Preparation and Deployment
 --------------------------
 
 Zun requires kuryr and etcd services, for more information about how to
-configure kuryr refer to `Kuryr Guide <https://docs.openstack.org/kolla-ansible/latest/kuryr-guide.html>`_.
+configure kuryr refer to :doc:`kuryr-guide`.
 
 To allow Zun Compute connect to the Docker Daemon, add the following in the
 ``docker.service`` file on each zun-compute node.
@@ -66,7 +66,16 @@ Create zun container.
 
 ::
 
-  $ zun create --name test cirros ping -c4 8.8.8.8
+  $ zun create --name test --net network=demo-net cirros ping -c4 8.8.8.8
+
+.. note::
+
+  Kuryr does not support networks with DHCP enabled, disable DHCP in the
+  subnet used for zun containers.
+
+  ::
+
+    openstack subnet set --no-dhcp <subnet>
 
 Verify container is created.
 

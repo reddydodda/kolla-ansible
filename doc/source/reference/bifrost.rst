@@ -64,11 +64,11 @@ Preparation
 Prepare the Control Host
 ------------------------
 
-Follow the **Install dependencies** section of the :doc:`quickstart` guide
-instructions to set up kolla and kolla-ansible dependencies.  Follow the
-instructions in either the **Install kolla for development** section or the
-**Install kolla for deployment or evaluation** section to install kolla and
-kolla-ansible.
+Follow the **Install dependencies** section of the :doc:`../user/quickstart`
+guide instructions to set up kolla and kolla-ansible dependencies.  Follow
+the instructions in either the **Install kolla for development** section or
+the **Install kolla for deployment or evaluation** section to install kolla
+and kolla-ansible.
 
 Prepare the Deployment Host
 ---------------------------
@@ -166,7 +166,7 @@ group.  In the ``all-in-one`` and ``multinode`` inventory files, a ``bifrost``
 group is defined which contains all hosts in the ``deployment`` group.  This
 top level ``deployment`` group is intended to represent the host running the
 ``bifrost_deploy`` container.  By default, this group contains ``localhost``.
-See `Multinode Deployment of Kolla <https://docs.openstack.org/kolla-ansible/latest/multinode.html>`_
+See :doc:`/user/multinode`
 for details on how to modify the Ansible inventory in a multinode deployment.
 
 Bifrost does not currently support running on multiple hosts so the ``bifrost``
@@ -179,8 +179,8 @@ host on which bifrost is deployed.
 Prepare Kolla-Ansible Configuration
 -----------------------------------
 
-Follow the instructions in :doc:`quickstart` to prepare kolla-ansible's global
-configuration file ``globals.yml``.  For bifrost, the
+Follow the instructions in :doc:`../user/quickstart` to prepare kolla-ansible's
+global configuration file ``globals.yml``.  For bifrost, the
 ``bifrost_network_interface`` variable should be set to the name of the
 interface that will be used to provision bare metal cloud hosts if this is
 different than ``network_interface``.  For example to use ``eth1``:

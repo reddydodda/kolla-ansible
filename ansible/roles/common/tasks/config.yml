@@ -33,6 +33,8 @@
     - "01-syslog"
     - "02-mariadb"
     - "03-rabbitmq"
+    - "04-openstack-wsgi"
+    - "05-libvirt"
   notify:
     - Restart fluentd container
 
@@ -59,7 +61,6 @@
   with_items:
     - "apache_access"
     - "wsgi_access"
-    - "wsgi_python"
   notify:
     - Restart fluentd container
 
